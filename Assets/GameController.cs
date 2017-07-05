@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
 	public int currentPopulation;
+	public int maxPopulation;
+	public float populationMultiplier;
+	public float populationBonus;
 	public double currentMagic;
 	public float currentMagicGrowthRate;
 	public float prayerStrengthRate;
@@ -27,17 +30,19 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		currentMagic += currentMagicGrowthRate;
-		Debug.Log ("Current magic is: " + currentPopulation);
-		currentMagicText.text = "Magic: " + currentMagic.ToString ("0.##");
+		populationBonus = currentPopulation * populationMultiplier;
+		currentMagic += currentMagicGrowthRate + populationBonus;
+		currentMagicText.text = "Magic: " + currentMagic.ToString ("0.##") + " + Population bonus: " + populationBonus.ToString();
 		currentMagicGrowthRateText.text = "Magic Growth Rate: " + currentMagicGrowthRate.ToString ("0.###");
-		currentPopulationText.text = "Population: " + currentPopulation.ToString (); 
+		currentPopulationText.text = "Population: " + currentPopulation.ToString () + " / " + maxPopulation.ToString(); 
 
 		//Tracking population growth
 		growthTimer++;
 		if (growthTimer > populationGrowthRate){
-			currentPopulation++;
-			growthTimer = 0;
+			if (currentPopulation < maxPopulation) {
+				currentPopulation++;
+				growthTimer = 0;
+			}
 		}
 	}
 }
