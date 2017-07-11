@@ -19,22 +19,29 @@ public class GameController : MonoBehaviour {
 	public Text currentMagicGrowthRateText;
 	public Text currentPopulationText;
 
+    //Debugging values
+    public float prayerMultiplier;
+
 	// Use this for initialization
 	void Start () {
 		
 	}
 
 	public void Pray (){
-		currentMagic += (currentMagicGrowthRate * prayerStrengthRate);
+		currentMagic += 1 + (currentMagicGrowthRate * prayerStrengthRate);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		populationBonus = currentPopulation * populationMultiplier;
-		currentMagic += currentMagicGrowthRate + populationBonus;
-		currentMagicText.text = "Magic: " + currentMagic.ToString ("0.##") + " + Population bonus: " + populationBonus.ToString();
+        prayerStrengthRate = currentPopulation * prayerMultiplier;
+
+		currentMagic += + currentMagicGrowthRate + populationBonus;
+        currentMagicText.text = "Magic: " + currentMagic.ToString("0");
 		currentMagicGrowthRateText.text = "Magic Growth Rate: " + currentMagicGrowthRate.ToString ("0.###");
 		currentPopulationText.text = "Population: " + currentPopulation.ToString () + " / " + maxPopulation.ToString(); 
+
+
 
 		//Tracking population growth
 		growthTimer++;
