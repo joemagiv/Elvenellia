@@ -19,6 +19,15 @@ public class GameController : MonoBehaviour {
 	public Text currentMagicGrowthRateText;
 	public Text currentPopulationText;
 
+
+
+    //values for spawning elves
+    public GameObject elfPrefab;
+    public int totalElves;
+    public int elfSpawnTimer;
+    public int currentElfSpawnTimer;
+    public Transform peopleParent;
+
     //Debugging values
     public float prayerMultiplier;
 
@@ -30,9 +39,46 @@ public class GameController : MonoBehaviour {
 	public void Pray (){
 		currentMagic += 1 + (currentMagicGrowthRate * prayerStrengthRate);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    //Controlling Build buttons
+    public bool buttonsActive;
+
+    public void ShowHideBuildToggle()
+    {
+        if (!buttonsActive)
+        {
+            ShowAllBuildOptions();
+            buttonsActive = true;
+        } else
+        {
+            HideAllBuildOptions();
+        }
+    }
+
+    public void ShowAllBuildOptions()
+    {
+        Build[] buildButtons = FindObjectsOfType<Build>();
+        foreach (Build buildButton in buildButtons)
+        {
+            if (buildButton.isActive)
+            {
+                buildButton.ShowButton();
+            }
+        }
+    }
+
+    public void HideAllBuildOptions()
+    {
+        Build[] buildButtons = FindObjectsOfType<Build>();
+        foreach (Build buildButton in buildButtons)
+        {
+            buildButton.HideButton();
+        }
+        buttonsActive = false;
+    }
+
+    // Update is called once per frame
+    void Update () {
 		populationBonus = currentPopulation * populationMultiplier;
         prayerStrengthRate = currentPopulation * prayerMultiplier;
 
@@ -51,5 +97,31 @@ public class GameController : MonoBehaviour {
 				growthTimer = 0;
 			}
 		}
+
+        //Tracking elf spawning
+        currentElfSpawnTimer++;
+        if (currentElfSpawnTimer > elfSpawnTimer)
+        {
+            if (totalElves < currentPopulation)
+            {
+                Building[] buildings = FindObjectsOfType<Building>();
+                if (buildings.Length > 1)
+                {
+                    totalElves++;
+                    Building randomSpawnBuilding = buildings[Mathf.RoundToInt(Random.Range(0, buildings.Length))];
+                    Vector3 buildingEntrance = randomSpawnBuilding.entrance.transform.position;
+
+                    GameObject newElf = Instantiate(elfPrefab, buildingEntrance, Quaternion.identity, peopleParent);
+                    Elf elfScript = newElf.GetComponent<Elf>();
+                    Building randomDestinationBuilding = buildings[Mathf.RoundToInt(Random.Range(0, buildings.Length))];
+                    elfScript.spawnVector = buildingEntrance;
+                    elfScript.destinationVector = randomDestinationBuilding.entrance.transform.position;
+                    currentElfSpawnTimer = 0;
+                }
+            
+              
+            }
+        }
+
 	}
 }
