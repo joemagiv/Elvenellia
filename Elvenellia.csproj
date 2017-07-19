@@ -88,6 +88,7 @@
     <Compile Include="Assets\Building.cs" />
     <Compile Include="Assets\Elf.cs" />
     <Compile Include="Assets\GameController.cs" />
+    <Compile Include="Assets\IntroText.cs" />
     <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\prayer.cs" />
   </ItemGroup>

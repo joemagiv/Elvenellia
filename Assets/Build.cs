@@ -15,7 +15,7 @@ public class Build : MonoBehaviour {
 
     public float populationSpeedIncrease;
 
-	public float currentCostOfBuilding;
+	public double currentCostOfBuilding;
 	public float costMultiplier;
 
 
@@ -77,7 +77,7 @@ public class Build : MonoBehaviour {
 
     public void BuildBuilding()
     {
-        Vector2 buildingPlacement = new Vector2(Random.Range(-6.36f,6.49f),Random.Range(-4.05f, -0.07f));
+        Vector2 buildingPlacement = new Vector2(Random.Range(-6.36f ,6.49f ),Random.Range(-4.05f , -0.07f ));
         GameObject newBuilding = Instantiate(buildingPrefab, buildingPlacement, Quaternion.identity, buildingsParent);
         SpriteRenderer buildingSpriteRenderer = newBuilding.GetComponent<SpriteRenderer>();
         buildingSpriteRenderer.sprite = buildingSprite;

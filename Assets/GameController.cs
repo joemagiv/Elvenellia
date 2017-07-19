@@ -26,10 +26,17 @@ public class GameController : MonoBehaviour {
     public int totalElves;
     public int elfSpawnTimer;
     public int currentElfSpawnTimer;
+
     public Transform peopleParent;
+    public Transform buildingsParent;
+
+    public Animator parentsAnimator;
+
 
     //Debugging values
     public float prayerMultiplier;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -77,6 +84,36 @@ public class GameController : MonoBehaviour {
         buttonsActive = false;
     }
 
+    private bool scaleIncreased;
+
+    public void IncreaseScale()
+    {
+        if (!scaleIncreased)
+        {
+            scaleIncreased = true;
+            parentsAnimator.SetTrigger("Zoom");
+
+
+        }
+
+        
+    }
+
+    private bool scaleIncreased2;
+
+    public void IncreaseScale2()
+    {
+        if (!scaleIncreased2)
+        {
+            scaleIncreased2 = true;
+            parentsAnimator.SetTrigger("Zoom");
+
+
+        }
+
+
+    }
+
     // Update is called once per frame
     void Update () {
 		populationBonus = currentPopulation * populationMultiplier;
@@ -122,6 +159,19 @@ public class GameController : MonoBehaviour {
               
             }
         }
+
+        if (currentPopulation > 150)
+        {
+            IncreaseScale();
+        }
+
+        if (currentPopulation > 700)
+        {
+            IncreaseScale2();
+        }
+
+
+
 
 	}
 }
