@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour {
         {
             scaleIncreased = true;
             parentsAnimator.SetTrigger("Zoom");
-
+            elfSpawnTimer = elfSpawnTimer / 2;
 
         }
 
@@ -107,7 +107,7 @@ public class GameController : MonoBehaviour {
         {
             scaleIncreased2 = true;
             parentsAnimator.SetTrigger("Zoom");
-
+            elfSpawnTimer = elfSpawnTimer / 2;
 
         }
 
@@ -121,8 +121,8 @@ public class GameController : MonoBehaviour {
 
 		currentMagic += + currentMagicGrowthRate + populationBonus;
         currentMagicText.text = "Magic: " + currentMagic.ToString("0");
-		currentMagicGrowthRateText.text = "Magic Growth Rate: " + currentMagicGrowthRate.ToString ("0.###");
-		currentPopulationText.text = "Population: " + currentPopulation.ToString () + " / " + maxPopulation.ToString(); 
+		currentMagicGrowthRateText.text = "Magic per sec: " + (currentMagicGrowthRate*30).ToString ("0.###");
+		currentPopulationText.text = "Pop: " + currentPopulation.ToString () + "/" + maxPopulation.ToString(); 
 
 
 
@@ -132,6 +132,7 @@ public class GameController : MonoBehaviour {
 			if (currentPopulation < maxPopulation) {
 				currentPopulation++;
 				growthTimer = 0;
+                
 			}
 		}
 
